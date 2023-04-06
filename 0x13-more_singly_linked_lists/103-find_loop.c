@@ -8,33 +8,33 @@
  */
 listint_t *find_listint_loop(listint_t *head)
 {
-	listint_t *p2;
-	listint_t *prev;
+	listint_t *slack;
+	listint_t *fast;
 
-	p2 = head;
-	prev = head;
-	while (head && p2 && p2->next)
+	slack = head;
+	fast = head;
+	while (head && slack && slack->next)
 	{
 		head = head->next;
-		p2 = p2->next->next;
+		slack = slack->next->next;
 
-		if (head == p2)
+		if (head == slcak)
 		{
-			head = prev;
-			prev =  p2;
+			head = fast;
+			fast =  slack;
 			while (1)
 			{
-				p2 = prev;
-				while (p2->next != head && p2->next != prev)
+				slack = fast;
+				while (slack->next != head && slack->next != fast)
 				{
-					p2 = p2->next;
+					slack = slack->next;
 				}
-				if (p2->next == head)
+				if (slack->next == head)
 					break;
 
 				head = head->next;
 			}
-			return (p2->next);
+			return (slack->next);
 		}
 	}
 
