@@ -2,11 +2,11 @@
 #include <stdio.h>
 
 /**
- * error_file - checks if files can be opened.
+ * error_file - check if the files can be opened.
  * @file_from: file_from.
  * @file_to: file_to.
  * @argv: arguments vector.
- * Return: a pointer to the newly allocated buffer.
+ * Return: a pointer to newly allocated buffers.
  */
 void error_file(int file_from, int file_to, char *argv[])
 {
