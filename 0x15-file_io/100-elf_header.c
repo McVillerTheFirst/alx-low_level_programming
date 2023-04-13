@@ -19,9 +19,10 @@ void close_elf(int elf);
 
 /**
  * check_elf - Checks if a file is an ELF file.
- * @e_ident: A pointer to an array containing the ELF magic numbers.
+ * @e_ident: A pointer to an array containing ELF magic numbers.
  *
- * Description: If the file is not an ELF file - exit code 98.
+ * Description: If the file is not a ELF file - exit code 98.
+ * displays error message to stderr.
  */
 void check_elf(unsigned char *e_ident)
 {
@@ -41,10 +42,10 @@ void check_elf(unsigned char *e_ident)
 }
 
 /**
- * print_magic - Prints the magic numbers of an ELF header.
- * @e_ident: A pointer to an array containing the ELF magic numbers.
+ * print_magic - Prints the magic numbers of the ELF header.
+ * @e_ident: A pointer to an array containing ELF magic numbers.
  *
- * Description: Magic numbers are separated by spaces.
+ * Description: The Magic numbers are separated by a space inbetween.
  */
 void print_magic(unsigned char *e_ident)
 {
@@ -64,7 +65,7 @@ void print_magic(unsigned char *e_ident)
 }
 
 /**
- * print_class - Prints the class of an ELF header.
+ * print_class - Prints a class of the ELF header.
  * @e_ident: A pointer to an array containing the ELF class.
  */
 void print_class(unsigned char *e_ident)
@@ -177,8 +178,8 @@ void print_osabi(unsigned char *e_ident)
 }
 
 /**
- * print_abi - Prints the ABI version of an ELF header.
- * @e_ident: A pointer to an array containing the ELF ABI version.
+ * print_abi - Prints  ABI version of an ELF header.
+ * @e_ident: A pointers to the array containing the ELF ABI version.
  */
 void print_abi(unsigned char *e_ident)
 {
@@ -247,7 +248,7 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
  * close_elf - Closes an ELF file.
  * @elf: The file descriptor of the ELF file.
  *
- * Description: If the file cannot be closed - exit code 98.
+ * Description: If the file cannot be closed - exit the code 98.
  */
 void close_elf(int elf)
 {
@@ -273,10 +274,10 @@ void close_elf(int elf)
 int main(int __attribute__((__unused__)) argc, char *argv[])
 {
 	Elf64_Ehdr *header;
-	int o, r;
+	int s, p;
 
-	o = open(argv[1], O_RDONLY);
-	if (o == -1)
+	s = open(argv[1], O_RDONLY);
+	if (s == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
@@ -284,15 +285,15 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	header = malloc(sizeof(Elf64_Ehdr));
 	if (header == NULL)
 	{
-		close_elf(o);
+		close_elf(s);
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
 	}
-	r = read(o, header, sizeof(Elf64_Ehdr));
-	if (r == -1)
+	p = read(s, header, sizeof(Elf64_Ehdr));
+	if (p == -1)
 	{
 		free(header);
-		close_elf(o);
+		close_elf(s);
 		dprintf(STDERR_FILENO, "Error: `%s`: No such file\n", argv[1]);
 		exit(98);
 	}
@@ -309,6 +310,6 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	print_entry(header->e_entry, header->e_ident);
 
 	free(header);
-	close_elf(o);
+	close_elf(s);
 	return (0);
 }
