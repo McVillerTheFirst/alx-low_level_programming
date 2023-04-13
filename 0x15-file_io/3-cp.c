@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 		charac = read(file_from, buff, 1024);
 		if (charac == -1)
 			error_file(-1, 0, argv);
-		nw = write(file_to, buf, charac);
+		nw = write(file_to, buff, charac);
 		if (nw == -1)
 			error_file(0, -1, argv);
 	}
@@ -70,4 +70,3 @@ int main(int argc, char *argv[])
 	}
 	return (0);
 }
-
